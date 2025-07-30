@@ -1,7 +1,5 @@
 library(tidyverse)
 library(lubridate)
-install.packages("leaflet")
-library(leaflet)
 
 NYPD <- read.csv("~/Desktop/Projects/NYPD/NYPD/NYPD/NYPD_Arrest_Data__Year_to_Date_.csv")
 
@@ -281,16 +279,4 @@ fit = glm(Felony ~  ARREST_BORO + AGE_GROUP + PERP_SEX + PERP_RACE,
            family = binomial)
 
 summary(fit)
-
-colnames(clean_NYPD)
-
-leaflet(clean_NYPD) %>%
-  addTiles() %>%
-  addCircleMarkers(
-    ~Longitude, ~Latitude,
-    radius = 2, stroke = FALSE,
-    fillOpacity = 0.4,
-    color = ~ifelse(Felony == 1, "#d62728", "#1f77b4"),
-    clusterOptions = markerClusterOptions()
-  )
 
