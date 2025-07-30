@@ -96,6 +96,19 @@ ggplot(data = clean_NYPD, aes(x = LAW_CAT_CD)) +
     panel.grid.minor = element_blank(),
     panel.border     = element_blank())
 
+pie_law_cat <- clean_NYPD %>% 
+  count(LAW_CAT_CD, name = "n") %>%          # <-- creates the n column
+  arrange(desc(n)) %>% 
+  mutate(pct = n / sum(n))
+
+ggplot(pie_law_cat, aes(x = "", y = pct, fill = LAW_CAT_CD)) +
+  geom_col(width = 0.1, color = "white") +
+  coord_polar(theta = "y") +
+  geom_text(aes(label = percent(pct, accuracy = 0.1)),
+            position = position_stack(vjust = 0.5), size = 3) +
+  theme_void() +
+  labs(title = "Arrests by Law Category", fill = "LAW_CAT_CD")
+
 # plot count of arrest borough
 ggplot(data = clean_NYPD, aes(x = ARREST_BORO)) +
   geom_bar() +
@@ -109,6 +122,19 @@ ggplot(data = clean_NYPD, aes(x = ARREST_BORO)) +
     panel.grid.major = element_blank(),   # strip out grey grid & background
     panel.grid.minor = element_blank(),
     panel.border     = element_blank())
+
+pie_arrest_boro <- clean_NYPD %>% 
+  count(ARREST_BORO, name = "n") %>%          # <-- creates the n column
+  arrange(desc(n)) %>% 
+  mutate(pct = n / sum(n))
+
+ggplot(pie_arrest_boro, aes(x = "", y = pct, fill = ARREST_BORO)) +
+  geom_col(width = 0.1, color = "white") +
+  coord_polar(theta = "y") +
+  geom_text(aes(label = percent(pct, accuracy = 0.1)),
+            position = position_stack(vjust = 0.5), size = 3) +
+  theme_void() +
+  labs(title = "Arrests by Borough", fill = "Arrest Borough")
 
 # plot count of age group
 ggplot(data = clean_NYPD, aes(x = AGE_GROUP)) +
