@@ -3,7 +3,7 @@ library(lubridate)
 install.packages("leaflet")
 library(leaflet)
 
-NYPD <- read.csv("~/Desktop/NYPD/NYPD/NYPD_Arrest_Data__Year_to_Date_.csv")
+NYPD <- read.csv("~/Desktop/Projects/NYPD/NYPD/NYPD/NYPD_Arrest_Data__Year_to_Date_.csv")
 
 # Clean the data & Felony = 1,0 (binary)
 clean_NYPD = NYPD %>%   mutate(LAW_CAT_CD = str_trim(as.character(LAW_CAT_CD))) %>% 
@@ -276,7 +276,7 @@ ggplot(data = felony_race_pct, aes(x = PERP_RACE, y = pct_felony)) +
   )
 
 # Fit logistic regression
-fit = glm(Felony ~  Month + ARREST_BORO + AGE_GROUP + PERP_SEX + PERP_RACE + weekday,
+fit = glm(Felony ~  ARREST_BORO + AGE_GROUP + PERP_SEX + PERP_RACE,
            data = clean_NYPD,
            family = binomial)
 
