@@ -42,6 +42,7 @@ combined = bind_rows(data, betsi_contact) %>%
     `E-mail Address` == "" ~ NA,
     TRUE ~ `E-mail Address`))
 
+
 write.csv(combined, "~/Downloads/Alumni_Contact.csv", row.names = FALSE)
 
 
